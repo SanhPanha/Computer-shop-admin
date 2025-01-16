@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getDatabase, ref, update } from "firebase/database";
-import app from "@/lib/firebaseConfiguration";
+import app from "@/lib/firebase/firebaseConfiguration";
 import style from "./style.module.css";
 
 const validationSchema = Yup.object().shape({

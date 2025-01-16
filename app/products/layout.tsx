@@ -1,5 +1,3 @@
-import StoreProvider from "../StoreProvider"
-import SessionWrapper from "../SesionProvider"
 import NavbarComponent from "@/components/navbar/navbar"
 import SidebarComponent from "@/components/sidebar/sidbarComponent"
   
@@ -15,9 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="flex flex-col w-full scrollbar-hide">
-      <SessionWrapper>
         <body className="flex flex-col w-full min-h-screen">
-          <StoreProvider>
             <header>
               <NavbarComponent/>
             </header>
@@ -32,9 +28,7 @@ export default function RootLayout({
               </div>
               
             </main>
-          </StoreProvider>
         </body>
-      </SessionWrapper>
     </html>
   )
 }

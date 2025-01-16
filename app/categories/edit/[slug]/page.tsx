@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { getDatabase, ref, get } from "firebase/database";
-import app from "@/lib/firebaseConfiguration";
-import EditCategory from "@/components/category/EditCategory";
 import style from "./style.module.css";
+import app from "@/lib/firebase/firebaseConfiguration";
+import EditCategory from "@/components/category/EditCategory";
 
 export default function EditCategoryPage() {
   const router = useRouter();

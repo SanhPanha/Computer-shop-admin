@@ -1,5 +1,4 @@
 'use client';
-
 import {
   Avatar,
   Button,
@@ -16,7 +15,7 @@ export default function NavbarComponent() {
   const { currentUser, userLoggedIn, logout } = useAuth();
 
   console.log("userLoggedIn:", userLoggedIn);
-    console.log("currentUser:", currentUser);
+  console.log("currentUser:", currentUser);
 
   // If loading state is required, show a loading indicator
   if (!currentUser && userLoggedIn === null) {
@@ -47,7 +46,7 @@ export default function NavbarComponent() {
           alt="Logo"
         />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Cambo Product
+          Cambo Shop
         </span>
       </NavbarBrand>
 

@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getDatabase, ref, update, get } from "firebase/database";
-import app from "@/lib/firebaseConfiguration";
+import app from "@/lib/firebase/firebaseConfiguration";
 import style from "./style.module.css";
 import { CatageoryType, ProductType } from "@/lib/constans";
 

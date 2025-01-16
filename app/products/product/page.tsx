@@ -1,5 +1,4 @@
 'use client';
-import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'flowbite-react';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { useRouter } from 'next/navigation';
@@ -9,6 +8,7 @@ import { getDatabase, ref, get, remove } from "firebase/database";
 import { SearchComponent } from '@/components/seach_button/searchButton';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { ProductType } from '@/lib/constans';
+import { useEffect, useState } from 'react';
 
 const placeHolderImage = 'https://via.placeholder.com/150';
 

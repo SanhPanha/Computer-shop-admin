@@ -3,15 +3,13 @@ import React, { useContext, useState, useEffect, ReactNode } from "react";
 import { onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "@/lib/firebase/firebaseConfiguration";
 import type { User } from "firebase/auth";
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
 
-
 // Define the shape of the AuthContext value
-interface AuthContextType {
+type AuthContextType = {
   userLoggedIn: boolean;
   isEmailUser: boolean;
-  isGoogleUser: boolean;
   currentUser: User | null;
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
   logout: () => Promise<void>;
@@ -23,7 +21,6 @@ const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
 // Custom hook for accessing AuthContext
 export function useAuth() {
   const context = useContext(AuthContext);
-  console.log("useAuth called, context:", context);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
@@ -41,36 +38,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isEmailUser, setIsEmailUser] = useState(false);
   const [isGoogleUser, setIsGoogleUser] = useState(false);
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); // Initialize useRouter
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       setCurrentUser(user);
-
-  //       // Check if provider is email and password login
-  //       const isEmail = user.providerData.some(
-  //         (provider) => provider.providerId === "password"
-  //       );
-  //       setIsEmailUser(isEmail);
-
-  //       // Check if provider is Google
-  //       const isGoogle = user.providerData.some(
-  //         (provider) => provider.providerId === GoogleAuthProvider.PROVIDER_ID
-  //       );
-  //       setIsGoogleUser(isGoogle);
-
-  //       setUserLoggedIn(true);
-  //     } else {
-  //       setCurrentUser(null);
-  //       setUserLoggedIn(false);
-  //     }
-
-  //     setLoading(false);
-  //   });
-
-  //   return unsubscribe;
-  // }, []);
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -91,12 +59,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setCurrentUser(null);
         setUserLoggedIn(false);
         setIsEmailUser(false);
-        setIsGoogleUser(false);
       }
       setLoading(false);
     });
 
-    return unsubscribe;
+    return () => unsubscribe();
   }, []);
 
   const logout = async () => {
@@ -105,9 +72,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setCurrentUser(null);
       setUserLoggedIn(false);
       setIsEmailUser(false);
-      setIsGoogleUser(false);
-
-      // Redirect to the home page after logout
       router.push("/");
     } catch (error) {
       console.error("Error logging out:", error);
@@ -117,7 +81,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const value: AuthContextType = {
     userLoggedIn,
     isEmailUser,
-    isGoogleUser,
     currentUser,
     setCurrentUser,
     logout,
@@ -125,11 +88,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider value={value}>
-       {!loading ? 
-        children : 
-        <Loading />
-      }
+      {!loading ? children : <Loading />}
     </AuthContext.Provider>
   );
 }
-
